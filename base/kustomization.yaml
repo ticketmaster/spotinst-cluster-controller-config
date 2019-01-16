@@ -1,0 +1,13 @@
+commonLabels:
+  app: spotinst-cluster-controller
+
+imageTags:
+- name: spotinst/kubernetes-cluster-controller
+  newTag: 1.0.28
+
+namespace: kube-system
+
+resources:
+- certs-secret.yaml
+- deployment.yaml
+- rbac.yaml

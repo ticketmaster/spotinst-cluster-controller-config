@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spotinst-cluster-controller
+spec:
+  template:
+    spec:
+      containers:
+      - name: spotinst-cluster-controller
+        image: spotinst/kubernetes-cluster-controller
+        env:
+        - name: CLUSTER_IDENTIFIER
+          valueFrom:
+            secretKeyRef:
+              name: spotinst-cluster-controller
+              key: CLUSTER_IDENTIFIER
+        - name: SPOTINST_ACCOUNT
+          valueFrom:
+            secretKeyRef:
+              name: spotinst-cluster-controller
+              key: ACCOUNT
+        - name: SPOTINST_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: spotinst-cluster-controller
+              key: TOKEN
+        livenessProbe:
+          httpGet:
+            path: /healthcheck
+            port: 4401
+          initialDelaySeconds: 300
+          periodSeconds: 30
+        volumeMounts:
+        - name: spotinst-cluster-controller-certs
+          mountPath: /certs
+        - name: tmp-volume
+          mountPath: /tmp
+      securityContext:
+        runAsUser: 65534
+      serviceAccountName: spotinst-cluster-controller
+      tolerations:
+      - operator: "Exists"
+      volumes:
+      - name: spotinst-cluster-controller-certs
+        secret:
+          secretName: spotinst-cluster-controller-certs
+      - name: tmp-volume
+        emptyDir: {}

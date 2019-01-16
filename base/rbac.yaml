@@ -1,0 +1,73 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: spotinst-cluster-controller
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: spotinst-cluster-controller
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - nodes
+  - replicationcontrollers
+  - events
+  - limitranges
+  - services
+  - persistentvolumes
+  - persistentvolumeclaims
+  verbs:
+  - get
+  - delete
+  - list
+  - patch
+  - update
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  verbs:
+  - get
+  - list
+  - patch
+- apiGroups:
+  - extensions
+  resources:
+  - replicasets
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - policy
+  resources:
+  - poddisruptionbudgets
+  verbs:
+  - list
+- apiGroups:
+  - metrics.k8s.io
+  resources:
+  - pods
+  verbs:
+  - list
+- nonResourceURLs:
+  - /version/
+  - /version
+  verbs:
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: spotinst-cluster-controller
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: spotinst-cluster-controller
+subjects:
+- kind: ServiceAccount
+  name: spotinst-cluster-controller
+...

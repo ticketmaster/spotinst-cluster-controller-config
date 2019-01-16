@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spotinst-cluster-controller
+spec:
+  template:
+    metadata:
+      labels:
+        tier: app
+    spec:
+      containers:
+      - name: spotinst-cluster-controller
+        resources:
+          limits:
+            cpu: 500m
+            memory: 2Gi
+          requests:
+            cpu: 200m
+            memory: 500Mi

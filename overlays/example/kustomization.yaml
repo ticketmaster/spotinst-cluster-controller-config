@@ -1,0 +1,21 @@
+bases:
+# - github.com/ticketmaster/spotinst-cluster-controller-config//base
+- ../../base
+
+commonLabels:
+  app: spotinst-cluster-controller
+  inventorycode: spotinst-cluster-controller
+  productcode: prd354
+
+namespace: prd354
+
+patches:
+- deployment.yaml
+
+secretGenerator:
+- name: spotinst-cluster-controller
+  commands:
+    ACCOUNT: "printf act-1234ab56"
+    CLUSTER_IDENTIFIER: "printf my_cluster"
+    TOKEN: "printf 2x2783548814xeax98d7a41771268a99f6758abxdec04b6b7f20d3995eb9205b"
+  type: Opaque
