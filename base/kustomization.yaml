@@ -1,9 +1,9 @@
 commonLabels:
-  app: spotinst-cluster-controller
+  app.kubernetes.io/name: spotinst-cluster-controller
 
 imageTags:
 - name: spotinst/kubernetes-cluster-controller
-  newTag: 1.0.28
+  newTag: 1.0.30
 
 namespace: kube-system
 

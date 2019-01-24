@@ -2,7 +2,7 @@
 
 ```yaml
 commonLabels:
-  app: spotinst-cluster-controller
+  app.kubernetes.io/name: spotinst-cluster-controller
 ```
 
 Add this label to every resource and use it in any `selector`.
@@ -10,7 +10,7 @@ Add this label to every resource and use it in any `selector`.
 ```yaml
 imageTags:
 - name: spotinst/kubernetes-cluster-controller
-  newTag: 1.0.28
+  newTag: 1.0.30
 ```
 
 Use these tags for every container image with the given names.
